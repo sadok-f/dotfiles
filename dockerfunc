@@ -1,0 +1,46 @@
+composer() {
+    docker run \
+        --rm \
+        --net=net-1 \
+        -u ${UID}:${GID} -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro \
+        -v /etc/ssl:/etc/ssl:ro -v /etc/ca-certificates:/etc/ca-certificates:ro \
+        -v ${PWD}:${PWD} -w ${PWD} \
+        -v ${HOME}/.composer:${HOME}/.composer \
+        mhert/php-composer --ignore-platform-reqs $@
+}
+
+php() {
+    php-7.1
+}
+
+php-7.1() {
+    docker run \
+        --rm \
+        --net=net-1 \
+        -t -i \
+        -u ${UID}:${GID} -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro \
+        -v /etc/ssl:/etc/ssl:ro -v /etc/ca-certificates:/etc/ca-certificates:ro \
+        -v ${PWD}:${PWD} -w ${PWD} \
+        php:7.1-alpine $@
+}
+
+php-7.2() {
+    docker run \
+        --rm \
+        --net=net-1 \
+        -t -i \
+        -u ${UID}:${GID} -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro \
+        -v /etc/ssl:/etc/ssl:ro -v /etc/ca-certificates:/etc/ca-certificates:ro \
+        -v ${PWD}:${PWD} -w ${PWD} \
+        php:7.2.0beta1-alpine $@
+}
+
+php-cs-fixer() {
+    docker run \
+        --rm \
+        --net=net-1 \
+        -u ${UID}:${GID} -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro \
+        -v /etc/ssl:/etc/ssl:ro -v /etc/ca-certificates:/etc/ca-certificates:ro \
+        -v ${PWD}:${PWD} -w ${PWD} \
+        mhert/php-cs-fixer $@
+}
